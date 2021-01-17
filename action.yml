@@ -1,0 +1,39 @@
+name: 'Merge or PR'
+description: 'Merges branch to target branch or creates new branch and follow-up PR for conflict resolving'
+author: 'Michał Kobiec (mkkc12@gmail.com)'
+branding:
+  icon: 'git-branch' 
+  color: 'green'
+inputs:
+  target_branch:
+    description: 'The name of target branch to merge'
+    required: true
+  sha_to_merge:
+    description: 'Hash to merge. default GITHUB_SHA'
+    required: false
+  repo_token:
+    description: 'Github token'
+    required: true
+  merge_branch_name: 
+    decription: 'Name of the merge branch created in case of merge conflict'
+  pr_title:
+    decription: 'Title of pull request'
+    required: true
+  pr_body:
+    decription: 'Body of pull request'
+    required: false
+  pr_maintainer_modification:
+    decription: '1 or true to enable maintainer modification of pull request'
+    required: false
+  pr_draft:
+    decription: '1 or true to create draft pull request'
+    required: false
+  pr_asignee:
+    description: 'Github username of user to be assigned to pull request. Skip for no assignee'
+    required: false
+  pr_reviewer:
+    description: 'Github username of user to be reviewer of newly created pr. Skip for no reviewer'
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
