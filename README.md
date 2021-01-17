@@ -1,1 +1,1 @@
-Github action that tries to merge code to selected branch, and creates pull request with selected assignee on conflict. Useful for git flow hotfixes that have to be merged both to development and main branches.
+Github action that tries to merge target branch to selected base branch, and creates pull request with selected assignee on conflict. Useful for git flow hotfixes that have to be merged both to development and main branches.
