@@ -1,4 +1,4 @@
-import { setOutput } from "@actions/core";
+import { setOutput, debug, warning } from "@actions/core";
 import { getOctokit } from "@actions/github";
 import { GitHub } from "@actions/github/lib/utils";
 import { Config } from "./types";
@@ -29,8 +29,14 @@ async function tryMerge(
     setOutput("PR_CREATED", false);
     return true;
   } catch (error) {
+    const expectedConflictMessage = "Merge conflict";
     if (error.name !== "HttpError" || error.status !== 409) {
       throw Error(error);
+    }
+
+    debug(`API returned conflict: "${error}"`);
+    if (error.message !== expectedConflictMessage) {
+        warning(`Unexpected conflict message was returned from Github API: "${error.message}", please ensure you're using token that can push to protected branch`)
     }
     return false;
   }

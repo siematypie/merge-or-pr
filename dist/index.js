@@ -4415,8 +4415,13 @@ function tryMerge(octokit, { repoName: repo, repoOwner: owner, targetBranch: bas
             return true;
         }
         catch (error) {
+            const expectedConflictMessage = "Merge conflict";
             if (error.name !== "HttpError" || error.status !== 409) {
                 throw Error(error);
+            }
+            core_1.debug(`API returned conflict: "${error}"`);
+            if (error.message !== expectedConflictMessage) {
+                core_1.warning(`Unexpected conflict message was returned from Github API: "${error.message}", please ensure you're using token that can push to protected branch`);
             }
             return false;
         }
